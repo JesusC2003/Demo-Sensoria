@@ -23,7 +23,7 @@ class CustomModeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 8,
-      shadowColor: color.withOpacity(0.4),
+      shadowColor: _getShadowColor(color),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppConstants.cardBorderRadius),
       ),
@@ -36,8 +36,8 @@ class CustomModeButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppConstants.cardBorderRadius),
             gradient: LinearGradient(
               colors: [
-                color.withOpacity(0.1),
-                color.withOpacity(0.05),
+                _getLightColor(color),
+                _getVeryLightColor(color),
               ],
             ),
           ),
@@ -58,7 +58,7 @@ class CustomModeButton extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.2),
+        color: _getMediumColor(color),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Icon(
@@ -99,6 +99,35 @@ class CustomModeButton extends StatelessWidget {
       color: color,
     );
   }
+
+  // Funciones auxiliares para obtener colores sin withOpacity
+  Color _getShadowColor(MaterialColor color) {
+    if (color == Colors.blue) return const Color(0x6642A5F5);
+    if (color == Colors.amber) return const Color(0x66FFA726);
+    if (color == Colors.deepPurple) return const Color(0x66AB47BC);
+    return const Color(0x66000000);
+  }
+
+  Color _getLightColor(MaterialColor color) {
+    if (color == Colors.blue) return const Color(0x1A42A5F5);
+    if (color == Colors.amber) return const Color(0x1AFFA726);
+    if (color == Colors.deepPurple) return const Color(0x1AAB47BC);
+    return const Color(0x1A000000);
+  }
+
+  Color _getVeryLightColor(MaterialColor color) {
+    if (color == Colors.blue) return const Color(0x0D42A5F5);
+    if (color == Colors.amber) return const Color(0x0DFFA726);
+    if (color == Colors.deepPurple) return const Color(0x0DAB47BC);
+    return const Color(0x0D000000);
+  }
+
+  Color _getMediumColor(MaterialColor color) {
+    if (color == Colors.blue) return const Color(0x3342A5F5);
+    if (color == Colors.amber) return const Color(0x33FFA726);
+    if (color == Colors.deepPurple) return const Color(0x33AB47BC);
+    return const Color(0x33000000);
+  }
 }
 
 /// Widget de información reutilizable
@@ -121,10 +150,10 @@ class InfoCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppConstants.defaultPadding),
       decoration: BoxDecoration(
-        color: backgroundColor.withOpacity(0.2),
+        color: _getBackgroundColorWithAlpha(backgroundColor),
         borderRadius: BorderRadius.circular(AppConstants.buttonBorderRadius),
         border: Border.all(
-          color: backgroundColor.withOpacity(0.4),
+          color: _getBorderColorWithAlpha(backgroundColor),
           width: 1,
         ),
       ),
@@ -148,6 +177,22 @@ class InfoCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Color _getBackgroundColorWithAlpha(Color color) {
+    if (color == Colors.blue) return const Color(0x33425CF5);
+    if (color == Colors.amber) return const Color(0x33FFA726);
+    if (color == Colors.deepPurple) return const Color(0x33AB47BC);
+    // ignore: deprecated_member_use
+    return Color.fromARGB(51, color.red, color.green, color.blue);
+  }
+
+  Color _getBorderColorWithAlpha(Color color) {
+    if (color == Colors.blue) return const Color(0x66425CF5);
+    if (color == Colors.amber) return const Color(0x66FFA726);
+    if (color == Colors.deepPurple) return const Color(0x66AB47BC);
+    // ignore: deprecated_member_use
+    return Color.fromARGB(102, color.red, color.green, color.blue);
   }
 }
 

@@ -82,7 +82,7 @@ class _ReflexGameScreenState extends State<ReflexGameScreen> {
   }
 
   void _missTarget() async {
-    if (await Vibration.hasVibrator() ?? false) {
+    if (await Vibration.hasVibrator()) {
       Vibration.vibrate(duration: AppConstants.vibrationDuration);
     }
 
