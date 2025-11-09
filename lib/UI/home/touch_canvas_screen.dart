@@ -1,9 +1,10 @@
-// lib/ui/home/touch_canvas_screen.dart
+// lib/UI/home/touch_canvas_screen.dart (VERSIÓN RESPONSIVE)
 import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/utils/constants.dart';
+import '../../core/utils/responsive_utils.dart';
 
-/// MODO 3: LIENZO TÁCTIL
+/// MODO 3: LIENZO TÁCTIL (RESPONSIVE)
 class TouchCanvasScreen extends StatefulWidget {
   const TouchCanvasScreen({super.key});
 
@@ -49,17 +50,28 @@ class _TouchCanvasScreenState extends State<TouchCanvasScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(AppConstants.touchCanvasTitle),
+        title: Text(
+          AppConstants.touchCanvasTitle,
+          style: TextStyle(
+            fontSize: ResponsiveUtils.sp(context, 20),
+          ),
+        ),
         backgroundColor: AppTheme.secondaryPurple,
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.undo),
+            icon: Icon(
+              Icons.undo,
+              size: ResponsiveUtils.getIconSize(context, baseSize: 24),
+            ),
             onPressed: _strokes.isEmpty ? null : _undoLastStroke,
             tooltip: 'Deshacer',
           ),
           IconButton(
-            icon: const Icon(Icons.delete_outline),
+            icon: Icon(
+              Icons.delete_outline,
+              size: ResponsiveUtils.getIconSize(context, baseSize: 24),
+            ),
             onPressed: _strokes.isEmpty ? null : _clearCanvas,
             tooltip: 'Limpiar todo',
           ),
@@ -76,10 +88,12 @@ class _TouchCanvasScreenState extends State<TouchCanvasScreen> {
   }
 
   Widget _buildToolbar() {
+    final padding = ResponsiveUtils.getResponsivePadding(context);
+
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppConstants.defaultPadding,
-        vertical: 12,
+      padding: EdgeInsets.symmetric(
+        horizontal: padding,
+        vertical: ResponsiveUtils.getVerticalSpacing(context),
       ),
       decoration: BoxDecoration(
         color: Colors.grey.shade100,
@@ -94,7 +108,7 @@ class _TouchCanvasScreenState extends State<TouchCanvasScreen> {
       child: Column(
         children: [
           _buildColorPicker(),
-          const SizedBox(height: 12),
+          SizedBox(height: ResponsiveUtils.getVerticalSpacing(context)),
           _buildStrokeWidthSlider(),
         ],
       ),
@@ -102,17 +116,20 @@ class _TouchCanvasScreenState extends State<TouchCanvasScreen> {
   }
 
   Widget _buildColorPicker() {
+    final iconSize = ResponsiveUtils.getIconSize(context, baseSize: 24);
+    final colorSize = ResponsiveUtils.scaleWidth(context, 40);
+
     return Row(
       children: [
         Icon(
           Icons.palette,
           color: AppTheme.secondaryPurple,
-          size: 24,
+          size: iconSize,
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: ResponsiveUtils.getVerticalSpacing(context)),
         Expanded(
           child: SizedBox(
-            height: 40,
+            height: colorSize,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: _colors.length,
@@ -122,9 +139,11 @@ class _TouchCanvasScreenState extends State<TouchCanvasScreen> {
                 return GestureDetector(
                   onTap: () => setState(() => _selectedColor = color),
                   child: Container(
-                    width: 40,
-                    height: 40,
-                    margin: const EdgeInsets.only(right: 8),
+                    width: colorSize,
+                    height: colorSize,
+                    margin: EdgeInsets.only(
+                      right: ResponsiveUtils.getVerticalSpacing(context, multiplier: 0.5),
+                    ),
                     decoration: BoxDecoration(
                       color: color,
                       shape: BoxShape.circle,
@@ -145,10 +164,10 @@ class _TouchCanvasScreenState extends State<TouchCanvasScreen> {
                           : null,
                     ),
                     child: isSelected
-                        ? const Icon(
+                        ? Icon(
                             Icons.check,
                             color: Colors.white,
-                            size: 20,
+                            size: colorSize * 0.5,
                           )
                         : null,
                   ),
@@ -162,14 +181,17 @@ class _TouchCanvasScreenState extends State<TouchCanvasScreen> {
   }
 
   Widget _buildStrokeWidthSlider() {
+    final iconSize = ResponsiveUtils.getIconSize(context, baseSize: 24);
+    final previewSize = ResponsiveUtils.scaleWidth(context, 40);
+
     return Row(
       children: [
         Icon(
           Icons.line_weight,
           color: AppTheme.secondaryPurple,
-          size: 24,
+          size: iconSize,
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: ResponsiveUtils.getVerticalSpacing(context)),
         Expanded(
           child: Slider(
             value: _strokeWidth,
@@ -182,11 +204,13 @@ class _TouchCanvasScreenState extends State<TouchCanvasScreen> {
           ),
         ),
         Container(
-          width: 40,
-          height: 40,
+          width: previewSize,
+          height: previewSize,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(
+              ResponsiveUtils.getBorderRadius(context, small: 6, medium: 8),
+            ),
             border: Border.all(color: Colors.grey.shade300),
           ),
           child: Center(
@@ -242,8 +266,12 @@ class _TouchCanvasScreenState extends State<TouchCanvasScreen> {
   }
 
   Widget _buildInfoFooter() {
+    final padding = ResponsiveUtils.getResponsivePadding(context);
+    final iconSize = ResponsiveUtils.getIconSize(context, baseSize: 24);
+    final textSize = ResponsiveUtils.sp(context, 13);
+
     return Container(
-      padding: const EdgeInsets.all(AppConstants.defaultPadding),
+      padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
         color: Colors.deepPurple.shade50,
         border: Border(
@@ -258,15 +286,15 @@ class _TouchCanvasScreenState extends State<TouchCanvasScreen> {
           Icon(
             Icons.info_outline,
             color: AppTheme.secondaryPurple,
-            size: 24,
+            size: iconSize,
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: ResponsiveUtils.getVerticalSpacing(context)),
           Expanded(
             child: Text(
               AppConstants.touchCanvasInfo,
               style: TextStyle(
                 color: Colors.deepPurple.shade900,
-                fontSize: 13,
+                fontSize: textSize,
               ),
             ),
           ),
