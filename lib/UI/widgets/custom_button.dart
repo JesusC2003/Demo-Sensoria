@@ -1,6 +1,7 @@
 // lib/ui/widgets/custom_button.dart
 import 'package:flutter/material.dart';
 import '../../core/utils/constants.dart';
+import '../../core/utils/responsive_utils.dart';
 
 /// Botón personalizado para los modos de la aplicación
 class CustomModeButton extends StatelessWidget {
@@ -21,19 +22,22 @@ class CustomModeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final borderRadius = ResponsiveUtils.getBorderRadius(context);
+    final padding = ResponsiveUtils.getResponsivePadding(context);
+
     return Card(
       elevation: 8,
       shadowColor: _getShadowColor(color),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppConstants.cardBorderRadius),
+        borderRadius: BorderRadius.circular(borderRadius),
       ),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppConstants.cardBorderRadius),
+        borderRadius: BorderRadius.circular(borderRadius),
         child: Container(
-          padding: const EdgeInsets.all(AppConstants.defaultPadding + 4),
+          padding: EdgeInsets.all(padding + 4),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppConstants.cardBorderRadius),
+            borderRadius: BorderRadius.circular(borderRadius),
             gradient: LinearGradient(
               colors: [
                 _getLightColor(color),
@@ -43,10 +47,10 @@ class CustomModeButton extends StatelessWidget {
           ),
           child: Row(
             children: [
-              _buildIcon(),
-              const SizedBox(width: 20),
-              Expanded(child: _buildContent()),
-              _buildArrow(),
+              _buildIcon(context),
+              SizedBox(width: ResponsiveUtils.getVerticalSpacing(context)),
+              Expanded(child: _buildContent(context)),
+              _buildArrow(context),
             ],
           ),
         ),
@@ -54,38 +58,46 @@ class CustomModeButton extends StatelessWidget {
     );
   }
 
-  Widget _buildIcon() {
+  Widget _buildIcon(BuildContext context) {
+    final iconSize = ResponsiveUtils.getIconSize(context, baseSize: 40);
+    final padding = ResponsiveUtils.getResponsivePadding(context);
+    final borderRadius = ResponsiveUtils.getBorderRadius(context, small: 12, medium: 16);
+
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
         color: _getMediumColor(color),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(borderRadius),
       ),
       child: Icon(
         icon,
-        size: 40,
+        size: iconSize,
         color: color,
       ),
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(BuildContext context) {
+    final titleSize = ResponsiveUtils.sp(context, 18);
+    final descriptionSize = ResponsiveUtils.sp(context, 14);
+    final spacing = ResponsiveUtils.getVerticalSpacing(context, multiplier: 0.3);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           title,
           style: TextStyle(
-            fontSize: 18,
+            fontSize: titleSize,
             fontWeight: FontWeight.bold,
             color: color.shade700,
           ),
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: spacing),
         Text(
           description,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: descriptionSize,
             color: Colors.grey.shade700,
           ),
         ),
@@ -93,10 +105,13 @@ class CustomModeButton extends StatelessWidget {
     );
   }
 
-  Widget _buildArrow() {
+  Widget _buildArrow(BuildContext context) {
+    final iconSize = ResponsiveUtils.getIconSize(context, baseSize: 24);
+
     return Icon(
       Icons.arrow_forward_ios,
       color: color,
+      size: iconSize,
     );
   }
 
@@ -147,11 +162,17 @@ class InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final padding = ResponsiveUtils.getResponsivePadding(context);
+    final borderRadius = ResponsiveUtils.getBorderRadius(context, small: 8, medium: 12);
+    final iconSize = ResponsiveUtils.getIconSize(context, baseSize: 24);
+    final textSize = ResponsiveUtils.sp(context, 14);
+    final spacing = ResponsiveUtils.getVerticalSpacing(context);
+
     return Container(
-      padding: const EdgeInsets.all(AppConstants.defaultPadding),
+      padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
         color: _getBackgroundColorWithAlpha(backgroundColor),
-        borderRadius: BorderRadius.circular(AppConstants.buttonBorderRadius),
+        borderRadius: BorderRadius.circular(borderRadius),
         border: Border.all(
           color: _getBorderColorWithAlpha(backgroundColor),
           width: 1,
@@ -162,15 +183,15 @@ class InfoCard extends StatelessWidget {
           Icon(
             icon,
             color: textColor,
-            size: 24,
+            size: iconSize,
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: spacing),
           Expanded(
             child: Text(
               text,
               style: TextStyle(
                 color: textColor,
-                fontSize: 14,
+                fontSize: textSize,
               ),
             ),
           ),
@@ -213,22 +234,27 @@ class StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final iconSize = ResponsiveUtils.getIconSize(context, baseSize: 32);
+    final labelSize = ResponsiveUtils.sp(context, 14);
+    final valueSize = ResponsiveUtils.sp(context, 24);
+    final spacing = ResponsiveUtils.getVerticalSpacing(context, multiplier: 0.5);
+
     return Column(
       children: [
-        Icon(icon, color: color, size: 32),
-        const SizedBox(height: 8),
+        Icon(icon, color: color, size: iconSize),
+        SizedBox(height: spacing),
         Text(
           label,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: labelSize,
             color: Colors.grey.shade600,
           ),
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: spacing * 0.5),
         Text(
           value,
           style: TextStyle(
-            fontSize: 24,
+            fontSize: valueSize,
             fontWeight: FontWeight.bold,
             color: color,
           ),

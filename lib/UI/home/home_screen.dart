@@ -4,6 +4,7 @@ import 'package:demostracion_aplicativo/UI/home/touch_detector_screen.dart';
 import 'package:demostracion_aplicativo/UI/widgets/custom_button.dart';
 import 'package:demostracion_aplicativo/core/theme/app_theme.dart';
 import 'package:demostracion_aplicativo/core/utils/constants.dart';
+import 'package:demostracion_aplicativo/core/utils/responsive_utils.dart';
 import 'package:flutter/material.dart';
 
 /// Pantalla principal con el menú de modos
@@ -27,11 +28,10 @@ class HomeScreen extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              _buildHeader(),
+              _buildHeader(context),
               Expanded(
                 child: _buildModesList(context),
               ),
-              _buildInfoSection(),
             ],
           ),
         ),
@@ -39,32 +39,38 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
+    final padding = ResponsiveUtils.getResponsivePadding(context);
+    final iconSize = ResponsiveUtils.getIconSize(context, baseSize: 40);
+    final titleSize = ResponsiveUtils.sp(context, 28);
+    final subtitleSize = ResponsiveUtils.sp(context, 16);
+    final spacing = ResponsiveUtils.getVerticalSpacing(context);
+
     return Container(
-      padding: const EdgeInsets.all(AppConstants.largePadding),
+      padding: EdgeInsets.all(padding),
       child: Column(
         children: [
-          const Icon(
+          Icon(
             Icons.touch_app,
-            size: 40,
+            size: iconSize,
             color: AppTheme.primaryBlue,
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: spacing),
           Text(
             AppConstants.appTitle,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 28,
+              fontSize: titleSize,
               fontWeight: FontWeight.bold,
               color: Colors.grey.shade800,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: spacing * 0.5),
           Text(
             AppConstants.appSubtitle,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 16,
+              fontSize: subtitleSize,
               color: Colors.grey.shade600,
             ),
           ),
@@ -74,10 +80,11 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildModesList(BuildContext context) {
+    final padding = ResponsiveUtils.getResponsivePadding(context);
+    final spacing = ResponsiveUtils.getVerticalSpacing(context);
+
     return ListView(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppConstants.defaultPadding,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: padding),
       children: [
         CustomModeButton(
           title: AppConstants.touchDetectorTitle,
@@ -86,7 +93,7 @@ class HomeScreen extends StatelessWidget {
           color: Colors.blue,
           onTap: () => _navigateToMode(context, const TouchDetectorScreen()),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: spacing),
         CustomModeButton(
           title: AppConstants.reflexGameTitle,
           description: AppConstants.reflexGameDescription,
@@ -94,7 +101,7 @@ class HomeScreen extends StatelessWidget {
           color: Colors.amber,
           onTap: () => _navigateToMode(context, const ReflexGameScreen()),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: spacing),
         CustomModeButton(
           title: AppConstants.touchCanvasTitle,
           description: AppConstants.touchCanvasDescription,
@@ -106,13 +113,20 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoSection() {
+  Widget _buildInfoSection(BuildContext context) {
+    final padding = ResponsiveUtils.getResponsivePadding(context);
+    final borderRadius = ResponsiveUtils.getBorderRadius(context);
+    final iconSize = ResponsiveUtils.getIconSize(context, baseSize: 20);
+    final titleSize = ResponsiveUtils.sp(context, 16);
+    final textSize = ResponsiveUtils.sp(context, 14);
+    final spacing = ResponsiveUtils.getVerticalSpacing(context);
+
     return Container(
-      margin: const EdgeInsets.all(AppConstants.defaultPadding),
-      padding: const EdgeInsets.all(AppConstants.defaultPadding),
+      margin: EdgeInsets.all(padding),
+      padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
         color: const Color(0xFFE3F2FD),
-        borderRadius: BorderRadius.circular(AppConstants.cardBorderRadius),
+        borderRadius: BorderRadius.circular(borderRadius),
         border: Border.all(
           color: const Color(0xFF90CAF9),
           width: 1,
@@ -121,29 +135,29 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
               Icon(
                 Icons.science,
                 color: AppTheme.primaryBlue,
-                size: 10,
+                size: iconSize,
               ),
-              SizedBox(width: 8),
+              SizedBox(width: spacing * 0.5),
               Text(
                 '¿Cómo funciona?',
                 style: TextStyle(
-                  fontSize: 10,
+                  fontSize: titleSize,
                   fontWeight: FontWeight.bold,
                   color: AppTheme.primaryBlue,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: spacing),
           Text(
             AppConstants.capacitiveInfo,
             style: TextStyle(
-              fontSize: 10,
+              fontSize: textSize,
               color: Colors.grey.shade700,
               height: 1.5,
             ),
