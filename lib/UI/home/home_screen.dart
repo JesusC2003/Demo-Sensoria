@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
         children: [
           const Icon(
             Icons.touch_app,
-            size: 80,
+            size: 40,
             color: AppTheme.primaryBlue,
           ),
           const SizedBox(height: 16),
@@ -126,13 +126,13 @@ class HomeScreen extends StatelessWidget {
               Icon(
                 Icons.science,
                 color: AppTheme.primaryBlue,
-                size: 24,
+                size: 10,
               ),
               SizedBox(width: 8),
               Text(
                 '¿Cómo funciona?',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 10,
                   fontWeight: FontWeight.bold,
                   color: AppTheme.primaryBlue,
                 ),
@@ -143,7 +143,7 @@ class HomeScreen extends StatelessWidget {
           Text(
             AppConstants.capacitiveInfo,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 10,
               color: Colors.grey.shade700,
               height: 1.5,
             ),
