@@ -4,10 +4,7 @@ import '../../core/theme/app_theme.dart';
 import '../../core/utils/constants.dart';
 import '../widgets/custom_button.dart';
 
-/// MODO 1: DETECTOR DE TOQUES
-/// 
-/// Este modo demuestra cómo el sensor capacitivo detecta la posición exacta
-/// del contacto en la pantalla.
+
 class TouchDetectorScreen extends StatefulWidget {
   const TouchDetectorScreen({super.key});
 

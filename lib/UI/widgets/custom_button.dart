@@ -1,6 +1,5 @@
 // lib/ui/widgets/custom_button.dart
 import 'package:flutter/material.dart';
-import '../../core/utils/constants.dart';
 import '../../core/utils/responsive_utils.dart';
 
 /// Botón personalizado para los modos de la aplicación

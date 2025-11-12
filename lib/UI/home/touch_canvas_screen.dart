@@ -1,4 +1,3 @@
-// lib/UI/home/touch_canvas_screen.dart (VERSIÓN RESPONSIVE)
 import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/utils/constants.dart';
