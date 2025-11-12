@@ -182,23 +182,24 @@ class _ReflexGameScreenState extends State<ReflexGameScreen> {
 
   Widget _buildStartScreen() {
     return Center(
-      child: Container(
-        margin: const EdgeInsets.all(40),
-        padding: const EdgeInsets.all(30),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 20,
-              offset: const Offset(0, 10),
-            ),
-          ],
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
+      child: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.all(40),
+          padding: const EdgeInsets.all(30),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                blurRadius: 20,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
             Icon(
               Icons.speed,
               size: 80,
@@ -242,12 +243,13 @@ class _ReflexGameScreenState extends State<ReflexGameScreen> {
                 foregroundColor: Colors.white,
               ),
             ),
-            const SizedBox(height: 20),
             _buildInstructions(),
           ],
         ),
       ),
+      ),
     );
+  }
   }
 
   Widget _buildInstructions() {
@@ -290,7 +292,7 @@ class _ReflexGameScreenState extends State<ReflexGameScreen> {
       ),
     );
   }
-}
+
 
 /// CustomPainter para dibujar el objetivo
 class TargetPainter extends CustomPainter {
